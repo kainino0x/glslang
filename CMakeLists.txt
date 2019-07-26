@@ -121,7 +121,7 @@ if(EMSCRIPTEN OR ENABLE_WEB)
         add_link_options("SHELL: -s ENVIRONMENT=web,worker")
         add_link_options("SHELL: -s ALLOW_MEMORY_GROWTH=1")
 
-        add_link_options("SHELL: -s MODULARIZE=1")
+        add_link_options("SHELL: -s MODULARIZE=1 -s EXPORT_ES6=1")
         if(ENABLE_EMSCRIPTEN_SINGLE_FILE)
             add_link_options("SHELL: -s SINGLE_FILE=1")
         endif()
