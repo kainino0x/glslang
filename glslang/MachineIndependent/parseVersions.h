@@ -110,16 +110,7 @@ public:
     virtual bool checkExtensionsRequested(const TSourceLoc&, int numExtensions, const char* const extensions[], const char* featureDesc);
     virtual void updateExtensionBehavior(const char* const extension, TExtensionBehavior);
 
-#if !defined(GLSLANG_WEB) || DEBUG
-    virtual void C_DECL error(const TSourceLoc&, const char* szReason, const char* szToken,
-        const char* szExtraInfoFormat, ...) = 0;
-    virtual void C_DECL  warn(const TSourceLoc&, const char* szReason, const char* szToken,
-        const char* szExtraInfoFormat, ...) = 0;
-    virtual void C_DECL ppError(const TSourceLoc&, const char* szReason, const char* szToken,
-        const char* szExtraInfoFormat, ...) = 0;
-    virtual void C_DECL ppWarn(const TSourceLoc&, const char* szReason, const char* szToken,
-        const char* szExtraInfoFormat, ...) = 0;
-#else
+#ifdef GLSLANG_STRIP_ERROR_STRINGS
     virtual void C_DECL error(const TSourceLoc&, const char* szReason, const char* szToken,
                               const char* szExtraInfoFormat, ...) { addError(); }
     virtual void C_DECL  warn(const TSourceLoc&, const char* szReason, const char* szToken,
@@ -128,6 +119,15 @@ public:
         const char* szExtraInfoFormat, ...) { addError(); }
     virtual void C_DECL ppWarn(const TSourceLoc&, const char* szReason, const char* szToken,
                                const char* szExtraInfoFormat, ...) {};
+#else
+    virtual void C_DECL error(const TSourceLoc&, const char* szReason, const char* szToken,
+        const char* szExtraInfoFormat, ...) = 0;
+    virtual void C_DECL  warn(const TSourceLoc&, const char* szReason, const char* szToken,
+        const char* szExtraInfoFormat, ...) = 0;
+    virtual void C_DECL ppError(const TSourceLoc&, const char* szReason, const char* szToken,
+        const char* szExtraInfoFormat, ...) = 0;
+    virtual void C_DECL ppWarn(const TSourceLoc&, const char* szReason, const char* szToken,
+        const char* szExtraInfoFormat, ...) = 0;
 #endif
 
     void addError() { ++numErrors; }
@@ -142,7 +142,7 @@ public:
     void setCurrentString(int string) { currentScanner->setString(string); }
 
     void getPreamble(std::string&);
-#if defined(GLSLANG_WEB) && !DEBUG
+#ifdef GLSLANG_STRIP_ERROR_STRINGS
     bool relaxedErrors()    const { return true; }
     bool suppressWarnings() const { return true; }
 #else

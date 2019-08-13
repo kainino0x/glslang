@@ -69,7 +69,7 @@ class TPpContext;
 
 typedef std::set<int> TIdSetType;
 
-#ifdef GLSLANG_WEB
+#ifdef GLSLANG_STRIP_ERROR_STRINGS
 #define ppError(A, B, C, D) addError()
 #endif
 
@@ -101,7 +101,7 @@ public:
     }
     virtual ~TParseContextBase() { }
 
-#ifndef GLSLANG_WEB
+#ifndef GLSLANG_STRIP_ERROR_STRINGS
     virtual void C_DECL   error(const TSourceLoc&, const char* szReason, const char* szToken,
                                 const char* szExtraInfoFormat, ...);
     virtual void C_DECL    warn(const TSourceLoc&, const char* szReason, const char* szToken,

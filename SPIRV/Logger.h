@@ -38,8 +38,6 @@
 #include <string>
 #include <vector>
 
-#define GLSLANG_WEB
-
 namespace spv {
 
 // A class for holding all SPIR-V build status messages, including

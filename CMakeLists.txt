@@ -33,6 +33,7 @@ option(ENABLE_HLSL "Enables HLSL input support" ON)
 option(ENABLE_OPT "Enables spirv-opt capability if present" ON)
 
 option(ENABLE_WEB "Enables web optimized build" OFF)
+option(ENABLE_STRIP_ERROR_STRINGS "Strips error strings to optimize build size" OFF)
 option(ENABLE_EMSCRIPTEN_SINGLE_FILE "If using emscripten, enables SINGLE_FILE build" OFF)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT AND WIN32)
@@ -106,6 +107,10 @@ else()
     set(CMAKE_CXX_STANDARD 11)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
+endif()
+
+if(ENABLE_STRIP_ERROR_STRINGS)
+    add_definitions(-DGLSLANG_STRIP_ERROR_STRINGS)
 endif()
 
 if(EMSCRIPTEN OR ENABLE_WEB)

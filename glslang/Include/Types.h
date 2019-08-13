@@ -39,8 +39,6 @@
 #ifndef _TYPES_INCLUDED
 #define _TYPES_INCLUDED
 
-#define GLSLANG_WEB
-
 #include "../Include/Common.h"
 #include "../Include/BaseTypes.h"
 #include "../Public/ShaderLang.h"
