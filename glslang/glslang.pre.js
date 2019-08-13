@@ -18,7 +18,7 @@ Module['compileGLSLZeroCopy'] = function(glsl, shader_stage, gen_debug) {
         'number',
         ['string', 'number', 'number', 'number', 'boolean'],
         [glsl, shader_stage_int, p_output, p_output_len, gen_debug]);
-    var output = getValue(p_output, 'i32') / 4;
+    var output = getValue(p_output, 'i32');
     var output_len = getValue(p_output_len, 'i32');
     Module['_free'](p_output);
     Module['_free'](p_output_len);
@@ -28,7 +28,7 @@ Module['compileGLSLZeroCopy'] = function(glsl, shader_stage, gen_debug) {
     }
 
     var ret = {};
-    ret.data = Module['HEAPU32'].subarray(output, output + output_len);
+    ret.data = Module['HEAPU32'].subarray(output / 4, output / 4 + output_len);
     ret.free = function() {
         Module['_destroy_output_buffer'](output);
     };
