@@ -164,7 +164,8 @@ extern "C" {
  *
  * |glsl|          Null-terminated string containing the shader to be converted.
  * |stage_int|     Magic number indicating the type of shader being processed.
-*                  Legal values are as follows:
+ *                 Must be the int value of an EShLanguage constant.
+ *                 Some legal values:
  *                   Vertex = 0
  *                   Fragment = 4
  *                   Compute = 5
@@ -190,7 +191,7 @@ void* convert_glsl_to_spirv(const char* glsl, int stage_int, bool gen_debug, uin
     *spirv = nullptr;
     *spirv_len = 0;
 
-    if (stage_int != 0 && stage_int != 4 && stage_int != 5) {
+    if (stage_int >= static_cast<int>(EShLangCount)) {
         fprintf(stderr, "Invalid shader stage\n");
         return nullptr;
     }

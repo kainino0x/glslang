@@ -8,8 +8,10 @@ Module['compileGLSLZeroCopy'] = function(glsl, shader_stage, gen_debug) {
         shader_stage_int = 4;
     } else if (shader_stage === 'compute') {
         shader_stage_int = 5;
+    } else if (typeof shader_stage === 'number') {
+        shader_stage_int = shader_stage;
     } else {
-        throw new Error("shader_stage must be 'vertex', 'fragment', or 'compute'");
+        throw new Error("shader_stage must be 'vertex', 'fragment', 'compute', or an EShLanguage integer value");
     }
 
     var p_output = Module['_malloc'](4);
